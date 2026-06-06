@@ -3,7 +3,7 @@ import requests
 from lib.base_case import BaseCase
 
 class TestStores(BaseCase):
-    parametersList1 = ["07652", "77450", "47025"]
+    parametersList1 = ["07652", "71601", "47025"]
     parametersList2 = [("07450", '25922'), ("07450", '28047')]
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'adPatchId', 'latitude', 'longitude']
 
@@ -23,7 +23,17 @@ class TestStores(BaseCase):
 
         response_as_dict = response.json()
         for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json field  in response'
+            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
+
+    @pytest.mark.parametrize('Zip_Code', parametersList1)
+    def test_stores_first_nearest_store(self, Zip_Code):
+        response = requests.get("https://ee-api-ssi.staging.inscyth.com/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.token})
+        assert response.status_code == 200, 'Wrong status code'
+
+        response_as_dict = response.json()
+        min_distance = response_as_dict[0]['distance']
+        for store in response_as_dict:
+            assert min_distance <= store['distance'], 'The first store is not the nearest one'
 
 
     @pytest.mark.parametrize('Zip_Code, Store_Id', parametersList2)
