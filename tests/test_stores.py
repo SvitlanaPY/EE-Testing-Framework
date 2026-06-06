@@ -17,13 +17,14 @@ class TestStores(BaseCase):
 
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
-    def test_stores_json_structure(self, Zip_Code):
+    def test_response_structure(self, Zip_Code):
         response = requests.get("https://ee-api-ssi.staging.inscyth.com/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.token})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
         for key_name in self.json_keys:
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
+
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
     def test_stores_first_nearest_store(self, Zip_Code):
