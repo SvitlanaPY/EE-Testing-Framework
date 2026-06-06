@@ -1,21 +1,11 @@
 import pytest
 import requests
-import json
+from lib.base_case import BaseCase
 
-class TestStores:
+class TestStores(BaseCase):
     parametersList1 = ["07652", "77450", "47025"]
     parametersList2 = [("07450", '25922'), ("07450", '28047')]
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'adPatchId', 'latitude', 'longitude']
-
-    def setup_class(self):
-        retailer = {'clientHost': 'fd.staging.inscyth.com'}
-
-        response_ = requests.get("https://ee-api-ssi.staging.inscyth.com/lookup/retailer", params=retailer)
-        assert response_.status_code == 200, 'Wrong status code'
-
-        assert "token" in response_.json(), "There is no Bearer token in the response_"
-        self.token = response_.json().get("token")
-
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
     def test_get_six_stores(self, Zip_Code):
