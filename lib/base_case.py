@@ -13,5 +13,3 @@ class BaseCase:
 
         assert "token" in response_.json(), "There is no Bearer token in the response_"
         self.token = response_.json().get("token")
-
-        
