@@ -39,4 +39,4 @@ class TestZipCode(BaseCase):
     @pytest.mark.parametrize('lat, long', parametersListNegative)
     def test_negative_zipCode_validation_failures(self, lat, long):
         response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.token})
-        assert response.status_code == 422, 'Wrong status code - 422:VALIDATION_ERROR  is expected'
+        assert response.status_code == 422, 'Wrong status code - 422:ValidationError is expected'
