@@ -5,6 +5,8 @@ from requests import Response
 # Response - це class в модулі requests
 
 class BaseCase:
+    base_url = "https://ee-api-ssi.staging.inscyth.com/"
+
     def setup_class(self):
         retailer = {'clientHost': 'fd.staging.inscyth.com'}
 
@@ -13,3 +15,4 @@ class BaseCase:
 
         assert "token" in response_.json(), "There is no Bearer token in the response_"
         self.token = response_.json().get("token")
+
