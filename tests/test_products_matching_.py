@@ -29,17 +29,15 @@ class TestEPM(BaseCase):
 
     @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id", parametersList)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id):
-        # Формуємо payload із парою ID, яку відправляємо
+        # Формуємо payload
         current_payload = self.get_payload(sent_product_id, sent_type_id)
 
-        response = requests.post(f"{self.base_url}products/matching", json=current_payload,
-                                 headers={"Authorization": self.token})
+        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.token})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}"
 
         response_json = response.json()
-        assert "newProductID" in response_json["productsToReplace"][
-            0], "Response JSON does not contain 'newProductID' field"
-        # Отримуємо productID, який фактично повернув сервер
-        new_product_id = response_json["productsToReplace"][0]["newProductID"]
+        assert "newProductID" in response_json["productsToReplace"][0], "Response JSON does not contain 'newProductID' field"
+        # Отримуємо newProductID, який фактично повернув сервер
+        received_product_id = response_json["productsToReplace"][0]["newProductID"]
 
-        assert new_product_id == expected_product_id, f"Mapping error! Sent productID: {sent_product_id}. Expected to get: {expected_product_id}, but actually received: {new_product_id}"
+        assert received_product_id == expected_product_id, f"Mapping error! Sent productID: {sent_product_id}. Expected to get: {expected_product_id}, but actually received: {received_product_id}"
