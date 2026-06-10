@@ -4,7 +4,7 @@ from lib.base_case import BaseCase
 
 
 class TestEPM(BaseCase):
-    """sent_oldProductID, sent_typeId, expected_newProductID, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_productQteGrpId"""
+    """sent_productID, sent_typeId, expected_newProductID, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_productQteGrpId"""
     parametersList = [
         (30652, 1105, 30687, "07652", 25922, 2510, "Quartz", 0, 740),
         (-997, None, -997, "07652", 25922, 2510, "Quartz", 0, 740)
