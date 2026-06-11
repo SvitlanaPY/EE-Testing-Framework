@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .data import TEST_DATA
+from .data import EPM_DATA_toREPLACE
 
 
 class TestEPM(BaseCase):
@@ -36,7 +36,7 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
-    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id", TEST_DATA)
+    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id", EPM_DATA_toREPLACE)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id):
         # Формуємо payload
         current_payload = self.get_payload(
