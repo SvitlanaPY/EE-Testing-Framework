@@ -4,15 +4,15 @@ from lib.base_case import BaseCase
 
 
 class TestEPM(BaseCase):
-    """sent_productID, sent_typeId, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_productQteGrpId"""
+    """sent_productID, sent_typeId, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_productQteGrpId, retailer"""
     parametersList = [
-    (39091, 1111, "07652", 25922, 2510, "Quartz", 0, 740),
-    (40926, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
-    (40921, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
-    (30692, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-    (39114, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-    (39112, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-    (40919, 1106, "07652", 25922, 2500, "Natural Stone", 0, 780),
+    (39091, 1111, "07652", 25922, 2510, "Quartz", 0, 740, 'fd'),
+    (40926, 1102, "07652", 25922, 2510, "Quartz", 0, 740, 'fd'),
+    (40921, 1102, "07652", 25922, 2510, "Quartz", 0, 740, 'fd'),
+    (30692, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780, 'fd'),
+    (39114, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780, 'fd'),
+    (39112, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780, 'fd'),
+    (40919, 1106, "07652", 25922, 2500, "Natural Stone", 0, 780, 'fd'),
     ]
 
 
@@ -47,16 +47,16 @@ class TestEPM(BaseCase):
         }
 
     @pytest.mark.parametrize(
-        "sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id",
+        "sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id, retailer",
         parametersList)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, zip_code, store_id,
-                                     material_id, material_name, color_id, qte_grp_id):
+                                     material_id, material_name, color_id, qte_grp_id, retailer):
         # Формуємо payload
         current_payload = self.get_payload(
             sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id
         )
 
-        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.token})
+        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}: {response.reason}"
 
         response_json = response.json()
