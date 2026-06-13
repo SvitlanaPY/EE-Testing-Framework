@@ -13,6 +13,7 @@ class TestCity(BaseCase):
         ("50050", "Churdan", "IA"),
         ("9255700", "Moreno Valley", "CA")
     ]
+
     parametersListNegative = [
         ("35001"),
         ("00000"),
