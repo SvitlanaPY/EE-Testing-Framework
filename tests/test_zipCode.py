@@ -30,7 +30,7 @@ class TestZipCode(BaseCase):
     #     }
     @pytest.mark.parametrize('lat, long, expected_zipCode, expected_statusCode', parametersList)
     def test_get_zipCode_by_latitude_longitude(self, lat, long, expected_zipCode, expected_statusCode):
-        response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == expected_statusCode, 'Wrong status code'
 
         actual_zipCode = response.text
@@ -38,5 +38,5 @@ class TestZipCode(BaseCase):
 
     @pytest.mark.parametrize('lat, long', parametersListNegative)
     def test_negative_zipCode_validation_failures(self, lat, long):
-        response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 422, 'Wrong status code - 422:ValidationError is expected'
