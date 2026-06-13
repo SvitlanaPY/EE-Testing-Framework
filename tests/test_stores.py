@@ -10,7 +10,7 @@ class TestStores(BaseCase):
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
     def test_get_six_stores(self, Zip_Code):
-        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
@@ -18,7 +18,7 @@ class TestStores(BaseCase):
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
     def test_response_structure(self, Zip_Code):
-        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
@@ -27,7 +27,7 @@ class TestStores(BaseCase):
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
     def test_first_nearest_store(self, Zip_Code):
-        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
@@ -37,7 +37,7 @@ class TestStores(BaseCase):
 
     @pytest.mark.parametrize('Zip_Code, Store_Id', parametersList2)
     def test_same_adpatch_as_given_store(self, Zip_Code, Store_Id):
-        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code, 'storeId': Store_Id}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code, 'storeId': Store_Id}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
@@ -49,7 +49,7 @@ class TestStores(BaseCase):
 
     def test_negative_validation_error(self):
         invalidZip = '0745'
-        response = requests.get(f"{self.base_url}stores", params={'ZipCode': invalidZip}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}stores", params={'ZipCode': invalidZip}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 422, 'Wrong status code'
 
         # response_as_dict = response.json()
