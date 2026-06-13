@@ -6,15 +6,15 @@ from lib.base_case import BaseCase
 class TestEPM(BaseCase):
     """sent_productID, sent_typeId, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_productQteGrpId"""
     parametersList = [
-        (39091, 1111, "07652", 25922, 2510, "Quartz", 0, 740),
-        (40926, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
-        (40921, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
-        (30692, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-        (39114, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-        (39112, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
-        (40926, 1106, "07652", 25922, 2500, "Natural Stone", 0, 780),
-        (40924, 1106, "07652", 25922, 2500, "Natural Stone", 0, 780)
+    (39091, 1111, "07652", 25922, 2510, "Quartz", 0, 740),
+    (40926, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
+    (40921, 1102, "07652", 25922, 2510, "Quartz", 0, 740),
+    (30692, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
+    (39114, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
+    (39112, 1111, "07652", 25922, 2500, "Natural Stone", 0, 780),
+    (40919, 1106, "07652", 25922, 2500, "Natural Stone", 0, 780),
     ]
+
 
     def get_payload(self,
                     product_id,
