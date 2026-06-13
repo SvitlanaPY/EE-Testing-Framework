@@ -25,7 +25,7 @@ class TestCity(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state', parametersList)
     def test_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 200, 'Wrong status code'
 
         assert 'city' in response.json(), "There is no city_parameter returned"
@@ -40,5 +40,5 @@ class TestCity(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code', parametersListNegative)
     def test_negative_city_state_notFound(self, ZIP_Code):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.token})
+        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('fd')})
         assert response.status_code == 404, 'Wrong status code - 404:NotFound is expected'
