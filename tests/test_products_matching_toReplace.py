@@ -36,14 +36,14 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
-    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id", EPM_DATA_toREPLACE)
-    def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id):
+    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id, retailer", EPM_DATA_toREPLACE)
+    def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id, retailer):
         # Формуємо payload
         current_payload = self.get_payload(
             sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id
         )
 
-        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.token})
+        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}"
 
         response_json = response.json()
