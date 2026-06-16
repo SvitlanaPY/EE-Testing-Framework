@@ -14,6 +14,7 @@ class TestEPM(BaseCase):
                     material_id,
                     material_name,
                     color_id,
+                    color_name,
                     qte_grp_id
                     ):
         """Хелпер-метод для динамічного формування payload"""
@@ -28,7 +29,7 @@ class TestEPM(BaseCase):
                 },
                 "color": {
                     "colorId": color_id,
-                    "colorName": "string",
+                    "colorName": color_name,
                     "thicknessOptions": "string"
                 },
                 "productQteGrpId": qte_grp_id
@@ -36,18 +37,18 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
-    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id, retailer", EPM_DATA_toREPLACE)
-    def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id, retailer):
+    @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREPLACE)
+    def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer):
         # Формуємо payload
         current_payload = self.get_payload(
-            sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, qte_grp_id
+            sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id
         )
 
         response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}"
 
         response_json = response.json()
-        assert len(response_json["productsToReplace"]) != 0, f"Mapping error! Expected a product to replace for productID: {sent_product_id}, but no matching product returned to replace."
+        assert len(response_json["productsToReplace"]) != 0, f"Mapping error! Expected {expected_product_id} a product to replace for productID: {sent_product_id}, but no matching product returned to replace."
         assert "newProductID" in response_json["productsToReplace"][0], "Response JSON does not contain 'newProductID' field"
         # Отримуємо newProductID, який фактично повернув сервер
         received_product_id = response_json["productsToReplace"][0]["newProductID"]
