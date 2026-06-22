@@ -54,4 +54,3 @@ class TestEPM(BaseCase):
         received_product_id = response_json["productsToReplace"][0]["newProductID"]
 
         assert received_product_id == expected_product_id, f"Mapping error! Sent productID: {sent_product_id}. Expected to get: {expected_product_id}, but actually received: {received_product_id}"
-
