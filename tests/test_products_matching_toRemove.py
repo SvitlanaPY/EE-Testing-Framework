@@ -94,8 +94,7 @@ class TestEPM(BaseCase):
 
         response_json = response.json()
 
-        assert len(response_json[
-                       "productsToRemove"]) != 0, f"Mapping error! Expected productID: {sent_product_id} to be removed, but no product returned to remove."
+        assert len(response_json["productsToRemove"]) != 0, f"Mapping error! Expected productID: {sent_product_id} to be removed, but no product returned to remove."
         assert "productId" in response_json["productsToRemove"][0], "Response JSON does not contain 'productId' field"
         # Отримуємо newProductID, який повернув сервер
         received_product_id = response_json["productsToRemove"][0]["productId"]
