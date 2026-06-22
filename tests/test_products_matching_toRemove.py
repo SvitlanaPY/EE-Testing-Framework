@@ -78,9 +78,7 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
-    @pytest.mark.parametrize(
-        "sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer",
-        parametersList)
+    @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", parametersList)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, zip_code, store_id,
                                      material_id, material_name, color_id, color_name, qte_grp_id, retailer):
         # Формуємо payload
@@ -88,12 +86,10 @@ class TestEPM(BaseCase):
             sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id
         )
 
-        response = requests.post(f"{self.base_url}products/matching", json=current_payload,
-                                 headers={"Authorization": self.tokens_list.get(retailer)})
+        response = requests.post(f"{self.base_url}products/matching", json=current_payload, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}: {response.reason}"
 
         response_json = response.json()
-
         assert len(response_json["productsToRemove"]) != 0, f"Mapping error! Expected productID: {sent_product_id} to be removed, but no product returned to remove."
         assert "productId" in response_json["productsToRemove"][0], "Response JSON does not contain 'productId' field"
         # Отримуємо newProductID, який повернув сервер
