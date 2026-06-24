@@ -15,10 +15,10 @@ class TestCity(BaseCase):
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
-        assert len(response_as_dict) > 0, f"None material is returned"
+        assert len(response_as_dict) > 0, "None material is returned"
 
         for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response.'
+            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
 
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
@@ -29,7 +29,7 @@ class TestCity(BaseCase):
 
         response_as_dict = response.json()
         for i in range(len(response_as_dict)):
-            assert len(response_as_dict[i]['colors']) > 0, f"None color is returned."
+            assert len(response_as_dict[i]['colors']) > 0, f"None color is returned"
 
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
@@ -43,4 +43,4 @@ class TestCity(BaseCase):
                 response_as_dict[i]['rank'] = 999999999999
 
         for i in range(len(response_as_dict) - 1):
-            assert response_as_dict[i+1]['rank'] >= response_as_dict[i]['rank'], f"None color is returned."
+            assert response_as_dict[i+1]['rank'] >= response_as_dict[i]['rank'], "Materials are not sorted"
