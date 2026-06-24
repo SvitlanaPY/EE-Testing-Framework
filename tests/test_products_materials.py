@@ -18,7 +18,7 @@ class TestCity(BaseCase):
         assert len(response_as_dict) > 0, "None material is returned"
 
         for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
+            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
 
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
