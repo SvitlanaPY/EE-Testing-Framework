@@ -32,11 +32,15 @@ class TestCity(BaseCase):
             assert len(response_as_dict[i]['colors']) > 0, f"None color is returned."
 
 
+    @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
+    def test_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
+        response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
+        assert response.status_code == 200, 'Wrong status code'
 
-    # @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
-    # def test_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
-    #     response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
-    #     assert response.status_code == 200, 'Wrong status code'
-    #
-    #     response_as_dict = response.json()
+        response_as_dict = response.json()
+        for i in range(len(response_as_dict)):
+            if response_as_dict[i]['rank'] is None:
+                response_as_dict[i]['rank'] = 999999999999
 
+        for i in range(len(response_as_dict) - 1):
+            assert response_as_dict[i+1]['rank'] >= response_as_dict[i]['rank'], f"None color is returned."
