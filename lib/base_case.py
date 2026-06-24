@@ -24,7 +24,7 @@ class BaseCase:
 
             assert response.status_code == 200, 'Wrong status code'
 
-            assert "token" in response.json(), "There is no Bearer token in the response_"
+            assert "token" in response.json(), "There is no Bearer token in the response."
             token = response.json().get("token")
 
             assert "retailerCode" in response.json(), "There is no retailerCode in the response_"
@@ -32,4 +32,3 @@ class BaseCase:
             clean_retailerCode = raw_retailerCode.lower()
 
             self.tokens_list.update({clean_retailerCode: token})
-
