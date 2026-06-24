@@ -124,11 +124,11 @@ EPM_DATA_toREPLACE = [
     (610, 1111, 586, "47025", 21885, 2510, "Quartz", 0, "string", 740, 'lowes'),
     (611, 1111, 587, "47025", 21885, 2510, "Quartz", 0, "string", 740, 'lowes'),
     (690, 1106, 683, "47025", 21885, 2510, "Quartz", 0, "string", 740, 'lowes'),
-    (7957, 1102, 7957, "47025", 21885, 2520, "Laminate-Installed", 8593, "FD Custom Neo Cloud 6314-34", 787, 'lowes'),
-    (7957, 1102, 7957, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes'),
+    (7957, 1102, 9029, "47025", 21885, 2520, "Laminate-Installed", 8593, "FD Custom Neo Cloud 6314-34", 787, 'lowes'),
+    (9029, 1102, 7957, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes'),
     (7957, 1102, 9029, "47025", 21885, 2524, "Laminate-Product Only", 8550, "FD Custom Amber Kashmire 6227-58", 787, 'lowes'),
-    (8447, 1102, 8680, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes'),
-    (9029, 1102, 7957, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes')
+    (9029, 1102, 7957, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes'),
+    (8447, 1102, 8680, "47025", 21885, 2520, "Laminate-Installed", 23085, "Custom Toffee di Pesco 5000K-22", 784, 'lowes')
 ]
 
 EPM_DATA_toREMOVE = [
