@@ -27,7 +27,7 @@ class BaseCase:
             assert "token" in response.json(), "There is no Bearer token in the response."
             token = response.json().get("token")
 
-            assert "retailerCode" in response.json(), "There is no retailerCode in the response_"
+            assert "retailerCode" in response.json(), "There is no retailerCode in the response."
             raw_retailerCode = response.json().get("retailerCode")
             clean_retailerCode = raw_retailerCode.lower()
 
