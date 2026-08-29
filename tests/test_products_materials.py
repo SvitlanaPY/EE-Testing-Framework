@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .data_materials import parametersList
+from .data_products_materials import parametersList
 
 
 class TestCity(BaseCase):
