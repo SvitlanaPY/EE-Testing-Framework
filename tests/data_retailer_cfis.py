@@ -12,6 +12,14 @@ parametersList = [
     ("86426", 26048, 720, 300, "flooranddecor")
 ]
 
-parametersList_WithAddress = [
-    ("30030", 28059, 720, "2308 East Lake Dr", "Decatur", "GA", "cliqstudios")
+parametersList_ValidAddress = [
+    ("30030", 28059, 720, "2308 East Lake Dr", "Decatur", "GA", "cliqstudios"),
+    ("35004", 28059, 720, "2008 Ansley Dr", "Moody", "AL", "cliqstudios"),
+    ("46001", 28059, 720, "1405 N Harrison St", "Alexandria", "IN", "cliqstudios")
+]
+
+parametersList_inValidAddress = [
+    ("30030", 28059, 720, "700 Jay St", "Churdan", "IA", "cliqstudios"),
+    ("35004", 28059, 720, "700 Jay St", "Churdan", "IA", "cliqstudios"),
+    ("46001", 28059, 720, "700 Jay St", "Churdan", "IA", "cliqstudios")
 ]
