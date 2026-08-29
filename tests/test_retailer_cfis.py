@@ -7,12 +7,12 @@ from .data_retailer_cfis import parametersList_inValidAddress
 
 
 class TestCity(BaseCase):
-    json_keys = ['address', 'city', 'companyId', 'companyName', 'deliveryStore', 'distance', 'state', 'zip']
+    json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'deliveryStore']
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
-    def test_cfis_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
+    def test_retailer_cfis_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
-                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
+                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -25,7 +25,7 @@ class TestCity(BaseCase):
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
     def test_first_cfi_is_nearest(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
-                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
+                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -41,7 +41,7 @@ class TestCity(BaseCase):
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
     def test_distance_by_extra_service_radius_miles(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
-                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
+                                params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -58,12 +58,12 @@ class TestCity(BaseCase):
                                            headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_no_address.status_code == 200, 'Wrong status code'
 
-        cfis_without_address = response_no_address.json()
-
         response_with_address = requests.get(f"{self.base_url}retailer/cfis",
                                              params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID, 'address': address, 'city': city, 'state': state},
                                              headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_with_address.status_code == 200, 'Wrong status code'
+
+        cfis_without_address = response_no_address.json()
         cfis_with_address = response_with_address.json()
 
         for cfi_no_address in cfis_without_address:
