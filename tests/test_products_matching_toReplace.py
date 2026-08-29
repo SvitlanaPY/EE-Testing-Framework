@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .data import EPM_DATA_toREPLACE
+from .EPM_data import EPM_DATA_toREPLACE
 
 
 class TestEPM(BaseCase):
