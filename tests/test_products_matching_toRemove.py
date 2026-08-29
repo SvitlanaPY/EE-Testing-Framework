@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .EPM_data import EPM_DATA_toREMOVE
+from .data_EPM import EPM_DATA_toREMOVE
 
 class TestEPM(BaseCase):
 
