@@ -57,3 +57,19 @@ class TestCity(BaseCase):
     #
     #     response_as_dict = response.json()
     #
+    # @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
+    # def test_distance_is_unchanged_by_wrong_address(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
+    #     response = requests.get(f"{self.base_url}retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
+    #                             headers={"Authorization": self.tokens_list.get(retailer)})
+    #     assert response.status_code == 200, 'Wrong status code'
+    #
+    #     response_as_dict = response.json()
+    #
+    # @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
+    # def test_bad_zip(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
+    #     response = requests.get(f"{self.base_url}retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
+    #                             headers={"Authorization": self.tokens_list.get(retailer)})
+    #     assert response.status_code == 200, 'Wrong status code'
+    #
+    #     response_as_dict = response.json()
+
