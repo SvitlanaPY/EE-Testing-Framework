@@ -1,52 +1,9 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-
+from .EPM_data import EPM_DATA_toREMOVE
 
 class TestEPM(BaseCase):
-    """sent_productID, sent_typeId, target_zipCode, target_storeId, target_materialId, target_materialName, target_colorId, target_colorName, target_productQteGrpId, retailer"""
-    parametersList = [
-        (39091, 1111, "07652", 25922, 2510, "Quartz", 0, "string", 740, 'flooranddecor'),
-        (40926, 1102, "07652", 25922, 2510, "Quartz", 0, "string", 740, 'flooranddecor'),
-        (40921, 1102, "07652", 25922, 2510, "Quartz", 0, "string", 740, 'flooranddecor'),
-        (30692, 1111, "07652", 25922, 2500, "Natural Stone", 0, "string", 780, 'flooranddecor'),
-        (39114, 1111, "07652", 25922, 2500, "Natural Stone", 0, "string", 780, 'flooranddecor'),
-        (39112, 1111, "07652", 25922, 2500, "Natural Stone", 0, "string", 780, 'flooranddecor'),
-        (40919, 1106, "07652", 25922, 2500, "Natural Stone", 0, "string", 780, 'flooranddecor'),
-        (40924, 1106, "07652", 25922, 2500, "Natural Stone", 0, "string", 780, 'flooranddecor'),
-        (35938, 1102, "45245", 26198, 2513, "Solid Surface", 0, "string", 780, 'homeoutlet'),
-        (35958, 1107, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (36132, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (36134, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (35963, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40911, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (35958, 1107, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (35959, 1107, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40906, 1107, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (35957, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (36134, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (35963, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40284, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40285, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40286, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40287, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (40288, 1111, "45245", 26198, 2513, "Solid Surface", 0, "string", 750, 'homeoutlet'),
-        (37479, 1102, "45245", 26198, 2500, "Natural Stone", 0, "string", 780, 'homeoutlet'),
-        (40939, 1111, "45245", 26198, 2500, "Natural Stone", 0, "string", 780, 'homeoutlet'),
-        (37495, 1107, "45245", 26198, 2500, "Natural Stone", 0, "string", 780, 'homeoutlet'),
-        (7958, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8550, "Custom Amber Kashmire 6227-58", 787, 'lowes'),
-        (8778, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8550, "Custom Amber Kashmire 6227-58", 787, 'lowes'),
-        (8781, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8890, "Fd Custom Autumn Carnival 1877k-35", 787, 'lowes'),
-        (8779, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8890, "Fd Custom Autumn Carnival 1877k-35", 787, 'lowes'),
-        (8778, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8890, "Fd Custom Autumn Carnival 1877k-35", 787, 'lowes'),
-        (8780, 1102, "47025", 21885, 2524, "Laminate-Product Only", 8890, "Fd Custom Autumn Carnival 1877k-35", 787, 'lowes'),
-        (8958, 1102, "47025", 21885, 2520, "Laminate-Installed", 8740, "Midnight Stone 6280-46", 784, 'lowes'),
-        (8680, 1102, "47025", 21885, 2520, "Laminate-Installed", 8740, "Midnight Stone 6280-46", 784, 'lowes'),
-        (8778, 1102, "47025", 21885, 2520, "Laminate-Installed", 23085, "Toffee di Pesco 5000K-22", 784, 'lowes'),
-        (8779, 1102, "47025", 21885, 2520, "Laminate-Installed", 23085, "Toffee di Pesco 5000K-22", 784, 'lowes'),
-        (8780, 1102, "47025", 21885, 2520, "Laminate-Installed", 23085, "Toffee di Pesco 5000K-22", 784, 'lowes'),
-        (8781, 1102, "47025", 21885, 2520, "Laminate-Installed", 23085, "Toffee di Pesco 5000K-22", 784, 'lowes')
-    ]
 
     def get_payload(self,
                     product_id,
@@ -79,7 +36,7 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
-    @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", parametersList)
+    @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREMOVE)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, zip_code, store_id,
                                      material_id, material_name, color_id, color_name, qte_grp_id, retailer):
         # Формуємо payload
