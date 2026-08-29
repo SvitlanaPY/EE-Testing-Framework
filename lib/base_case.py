@@ -17,7 +17,7 @@ class BaseCase:
         # assert "token" in response.json(), "There is no Bearer token in the response_"
         # self.token = response.json().get("token")
 
-        retailers = ['flooranddecor.staging.myprojectestimates.com', 'homeoutlet.staging.myprojectestimates.com', 'cliqstudios.staging.myprojectestimates.com', 'lowes.staging.myprojectestimates.com']
+        retailers = ['flooranddecor.staging.myprojectestimates.com', 'homeoutlet.staging.myprojectestimates.com', 'cliqstudios.staging.myprojectestimates.com', 'thertastore.staging.myprojectestimates.com', 'lowes.staging.myprojectestimates.com']
 
         for item in retailers:
             response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': item})
