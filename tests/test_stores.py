@@ -50,7 +50,7 @@ class TestStores(BaseCase):
     def test_negative_validation_error(self):
         invalidZip = '0745'
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': invalidZip}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
-        assert response.status_code == 422, 'Wrong status code - 422:Unprocessable Content is expected'
+        assert response.status_code == 422, 'Wrong status code - 422:UNPROCESSABLE CONTENT is expected'
 
         # response_as_dict = response.json()
         # assert response_as_dict['validationErrors'][0]['errorMessage'] == 'Zipcode should be 5 digits', 'Wrong error message'
