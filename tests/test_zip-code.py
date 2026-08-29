@@ -4,6 +4,7 @@ from lib.base_case import BaseCase
 
 # Latitude is specified in degrees within the range [-90, 90].
 # Longitude is specified in degrees within the range [-180, 180).
+# 422: "Validation Error"
 
 class TestZipCode(BaseCase):
     parametersList = [
