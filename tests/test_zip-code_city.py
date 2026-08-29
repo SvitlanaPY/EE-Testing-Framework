@@ -20,13 +20,13 @@ class TestCity(BaseCase):
         ("47o25"),
         (""),
         ("4702")
-        # ("77450")  # щоб негативний тест не пройшов, а впав з помилкою
+        # ("77450")  #щоб негативний тест не пройшов, а впав з помилкою
     ]
 
 
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state', parametersList)
     def test_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('fd')})
+        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
         assert 'city' in response.json(), "There is no city_parameter returned"
@@ -41,5 +41,5 @@ class TestCity(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code', parametersListNegative)
     def test_negative_city_state_notFound(self, ZIP_Code):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('fd')})
+        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 404, 'Wrong status code - 404:NotFound is expected'
