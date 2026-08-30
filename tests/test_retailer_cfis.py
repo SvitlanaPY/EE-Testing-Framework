@@ -110,8 +110,11 @@ class TestCity(BaseCase):
                     assert deliveryStore_storeID_noAddress == deliveryStore_storeID_wAddress or cfi_no_address['distance'] == cfi_w_address['distance'], "Defining the invalid project's installation address does affect the distance to the CFI."
                     break
 
-    @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
-    def test_bad_zip(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
-        response = requests.get(f"{self.base_url}retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
-                                headers={"Authorization": self.tokens_list.get(retailer)})
-        assert response.status_code == 400, 'Wrong status code - 400:BAD ZI is expected'
+    def test_negative_bad_zip(self):
+        invalidZip = '11111'
+        response = requests.get(f"{self.base_url}retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059},
+                                headers={"Authorization": self.tokens_list.get('cliqstudios')})
+        response_as_dict = response.json()
+        assert response.status_code == 400, 'Wrong status code - 400:Bad Request is expected'
+        assert response_as_dict['errorCode'] == "BAD_ZIP", 'Wrong error code - "BAD_ZIP" is expected.'
+        assert response_as_dict['errorMessage'] == "Can not find a zip", 'Wrong error message - "Can not find a zip" is expected.'
