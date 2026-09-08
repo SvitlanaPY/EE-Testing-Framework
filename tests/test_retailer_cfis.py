@@ -6,7 +6,7 @@ from .data_retailer_cfis import parametersList_ValidAddress
 from .data_retailer_cfis import parametersList_inValidAddress
 
 
-class TestCity(BaseCase):
+class TestRetailerCFIs(BaseCase):
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'deliveryStore']
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
