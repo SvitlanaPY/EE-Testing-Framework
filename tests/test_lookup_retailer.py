@@ -23,5 +23,5 @@ class TestLookupRetailer(BaseCase):
         assert response.status_code == 200, f"Expected status code 200 for invalid clientHost, but got {response.status_code}"
 
         response_as_dict = response.json()
-        assert response_as_dict['apiHostname'] == None, f"Expected apiHostname: None, but got: {response_as_dict['apiHostname']}"
-        assert response_as_dict['retailerCode'] == None, f"Expected retailerCode: None, but got: {response_as_dict['retailerCode']}"
+        assert response_as_dict['apiHostname'] is None, f"Expected apiHostname: None, but got: {response_as_dict['apiHostname']}"
+        assert response_as_dict['retailerCode'] is None, f"Expected retailerCode: None, but got: {response_as_dict['retailerCode']}"
