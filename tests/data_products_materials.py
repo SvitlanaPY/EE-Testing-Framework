@@ -1,3 +1,5 @@
+"""ZIP_Code, store_id, retailer_Code"""
+
 parametersList = [
     ("76180", 25977, "flooranddecor"),
     ("30152", 28059, "cliqstudios"),

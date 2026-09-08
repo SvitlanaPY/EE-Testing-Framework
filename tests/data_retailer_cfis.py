@@ -1,3 +1,5 @@
+"""ZIP_Code, store_id, prodQteGrp_ID, radius, retailer_Code"""
+
 parametersList = [
     ("80001", 28059, 720, 300, "cliqstudios"),
     ("30152", 28059, 720, 300, "cliqstudios"),

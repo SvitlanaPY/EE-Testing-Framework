@@ -1,3 +1,5 @@
+"""latitude, longitude, expected_zipCode, expected_statusCode, retailerCode"""
+
 parametersList = [
     ("39.1627", "-84.8914", "47025", 200, "flooranddecor"),
     ("29.7437", "-95.7318", "77450", 200, "flooranddecor"),

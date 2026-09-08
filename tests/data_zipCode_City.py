@@ -1,3 +1,4 @@
+"""ZIP_Code, expected_city, expected_state, retailer_Code"""
 parametersList = [
     ("07450", "Ridgewood", "NJ", "flooranddecor"),
     ("77450", "Katy", "TX", "flooranddecor"),
