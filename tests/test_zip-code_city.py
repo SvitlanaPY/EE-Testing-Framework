@@ -4,7 +4,7 @@ from lib.base_case import BaseCase
 from .data_zipCode_City import parametersList
 from .data_zipCode_City import parametersListNegative
 
-class TestCity(BaseCase):
+class TestZipCodeCity(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state, retailer', parametersList)
     def test_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state, retailer):
