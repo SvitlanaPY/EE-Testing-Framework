@@ -3,6 +3,7 @@ import requests
 from lib.base_case import BaseCase
 from .data_EPM import EPM_DATA_toREMOVE
 
+
 class TestEPM(BaseCase):
 
     def get_payload(self,
