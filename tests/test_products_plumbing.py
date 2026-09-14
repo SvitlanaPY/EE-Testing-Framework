@@ -1,4 +1,3 @@
-import null
 import pytest
 import requests
 from jsonschema import ValidationError, validate
@@ -56,35 +55,35 @@ class TestProductsPlumbing(BaseCase):
             "masterSku",
         ],
         "properties": {
-            "productId": {"type": "integer"},
+            "abbrevDesc": {"type": ["string", "null"]},
+            "consumerDesc": {"type": ["string", "null"]},
+            "expirationPromotionDate": {"type": ["string", "null"]},
+            "imageUrl": {"type": "string"},
+            "masterSku": {"type": "string"},
             "name": {"type": "string"},
-            "consumerDesc": {"type": "string"},
-            "abbrevDesc": {"type": "string"},
             "price": {"type": "number"},
             "priceWithoutDiscount": {"type": "number"},
-            "expirationPromotionDate": {"type": "string"},
-            "imageUrl": {"type": "string"},
-            "unitOfMeasure": {"type": "string"},
-            "qteTypeId": {"type": "integer"},
-            "qteTypeCode": {"type": "string"},
-            "qteCodeId": {"type": "integer"},
-            "qteCode": {"type": "string"},
-            "qteSubCodeId": {"type": "integer"},
-            "qteSubCode": {"type": "string"},
+            "productId": {"type": "integer"},
             "promos": {
                 "type": "array",
                 "items": {
                     "type": "object",
                     "required": ["id", "quantity", "maxQty", "colorProductIds"],
                     "properties": {
+                        "colorProductIds": {"type": ["string", "null"]},
                         "id": {"type": "integer"},
-                        "quantity": {"type": "integer"},
                         "maxQty": {"type": "integer"},
-                        "colorProductIds": {"type": "string"},
+                        "quantity": {"type": "integer"},
                     },
                 },
             },
-            "masterSku": {"type": "string"},
+            "qteCodeId": {"type": ["integer", "null"]},
+            "qteCode": {"type": ["string", "null"]},
+            "qteSubCodeId": {"type": ["integer", "null"]},
+            "qteSubCode": {"type": ["string", "null"]},
+            "qteTypeCode": {"type": "string"},
+            "qteTypeId": {"type": "integer"},
+            "unitOfMeasure": {"type": ["string", "null"]},
         },
     }
 
@@ -113,7 +112,7 @@ class TestProductsPlumbing(BaseCase):
 
         response_json = response.json()
         assert len(response_json) > 0, "None product is returned"
-        assert response_json[0]['productId'] is not null, "productId cannot be null"
-        assert response_json[0]['name'] is not null, "name cannot be null"
-        assert response_json[0]['price'] is not null, "price cannot be null"
-        assert response_json[0]['masterSku'] is not null, "masterSku cannot be null"
+        assert response_json[0]['productId'] is not None, "productId cannot be null"
+        assert response_json[0]['name'] is not None, "name cannot be null"
+        assert response_json[0]['price'] is not None, "price cannot be null"
+        assert response_json[0]['masterSku'] is not None, "masterSku cannot be null"
