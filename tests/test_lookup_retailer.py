@@ -7,7 +7,7 @@ from .data_lookup_retailer import parametersList
 class TestLookupRetailer(BaseCase):
 
     @pytest.mark.parametrize('client_Host, expected_api_HostName, expected_retailer_Code', parametersList)
-    def test_lookup_retailer(self, client_Host, expected_api_HostName, expected_retailer_Code):
+    def test_lookup_retailer_validation_clientHost(self, client_Host, expected_api_HostName, expected_retailer_Code):
         response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': client_Host})
 
         assert response.status_code == 200, 'Wrong status code'
