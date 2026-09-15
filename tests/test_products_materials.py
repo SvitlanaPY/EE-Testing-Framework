@@ -4,12 +4,12 @@ from lib.base_case import BaseCase
 from .data_products_materials import parametersList
 
 
-class TestProducstMaterials(BaseCase):
+class TestProductsMaterials(BaseCase):
     json_keys = ['attributes', 'colors', 'description', 'imageUrl', 'installedMinSqFt', 'isInstalled', 'jointPoints',
                  'materialID', 'prodOnlyMinSqFt', 'rank']
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
-    def test_materials_response_structure(self, ZIP_Code, store_id, retailer):
+    def test_productsMaterials_response_structure(self, ZIP_Code, store_id, retailer):
 
         response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -22,7 +22,7 @@ class TestProducstMaterials(BaseCase):
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
-    def test_get_colors(self, ZIP_Code, store_id, retailer):
+    def test_productsMaterials_get_colors(self, ZIP_Code, store_id, retailer):
 
         response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -33,7 +33,7 @@ class TestProducstMaterials(BaseCase):
             assert len(response_as_dict[i]['colors']) > 0, f"None color is returned"
 
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
-    def test_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
+    def test_productsMaterials_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
         response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
