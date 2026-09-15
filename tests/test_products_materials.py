@@ -4,7 +4,7 @@ from lib.base_case import BaseCase
 from .data_products_materials import parametersList
 
 
-class TestProductMaterials(BaseCase):
+class TestProducstMaterials(BaseCase):
     json_keys = ['attributes', 'colors', 'description', 'imageUrl', 'installedMinSqFt', 'isInstalled', 'jointPoints',
                  'materialID', 'prodOnlyMinSqFt', 'rank']
 
