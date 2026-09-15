@@ -4,6 +4,7 @@ import requests
 from requests import Response
 # Response - це class в модулі requests
 
+
 class BaseCase:
     base_url = "https://ee-api-ssi.staging.inscyth.com/"
     tokens_list = {}
