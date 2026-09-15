@@ -4,10 +4,11 @@ from lib.base_case import BaseCase
 from .data_zipCode_City import parametersList
 from .data_zipCode_City import parametersListNegative
 
+
 class TestZipCodeCity(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state, retailer', parametersList)
-    def test_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state, retailer):
+    def test_zipCodeCity_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state, retailer):
         response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -22,6 +23,6 @@ class TestZipCodeCity(BaseCase):
         assert actual_state.upper() == expected_state.upper(), 'Actual state_parameter is INcorrect'
 
     @pytest.mark.parametrize('ZIP_Code, retailer', parametersListNegative)
-    def test_negative_city_state_notFound(self, ZIP_Code, retailer):
+    def test_negative_zipCodeCity_city_state_notFound(self, ZIP_Code, retailer):
         response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 404, 'Wrong status code - 404:NotFound is expected'
