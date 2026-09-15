@@ -38,7 +38,7 @@ class TestEPM(BaseCase):
         }
 
     @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREMOVE)
-    def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, zip_code, store_id,
+    def test_EPM_products_to_remove(self, sent_product_id, sent_type_id, zip_code, store_id,
                                      material_id, material_name, color_id, color_name, qte_grp_id, retailer):
         # Form the payload
         current_payload = self.get_payload(
