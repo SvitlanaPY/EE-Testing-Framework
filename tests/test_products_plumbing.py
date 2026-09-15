@@ -88,7 +88,7 @@ class TestProductsPlumbing(BaseCase):
     }
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
-    def test_products_plumbing_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
+    def test_productsPlumbing_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(f"{self.base_url}products/plumbing",
                                 params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -104,7 +104,7 @@ class TestProductsPlumbing(BaseCase):
             assert False, f"Response schema mismatch for /products/plumbing endpoint in json-property: {error.json_path}, {error.message}"
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
-    def test_products_plumbing_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
+    def test_productsPlumbing_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(f"{self.base_url}products/plumbing",
                                 params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
