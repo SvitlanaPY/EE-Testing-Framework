@@ -2,53 +2,54 @@ from json.decoder import JSONDecodeError
 
 import requests
 from requests import Response
+
+
 # Response - це class в модулі requests
 
 
 class BaseCase:
-    base_url = "https://ee-api-ssi.qa.inscyth.com/"
-    #     base_url = "https://ee-api-ssi.staging.inscyth.com/"
+    # base_url = "https://ee-api-ssi.qa.inscyth.com/"
+    base_url = "https://ee-api-ssi.staging.inscyth.com/"
     tokens_list = {}
 
     def setup_class(self):
+        retailers = [
+            'bjs.staging.myprojectestimates.com',
+            'cabinetstogo.staging.myprojectestimates.com',
+            'cliqstudios.staging.myprojectestimates.com',
+            'flooranddecor.staging.myprojectestimates.com',
+            'flooringliquidators.staging.myprojectestimates.com',
+            'homeoutlet.staging.myprojectestimates.com',
+            'lowes.staging.myprojectestimates.com',
+            'lowesime.staging.myprojectestimates.com',
+            'thertastore.staging.myprojectestimates.com',
+            'wholesalecabinets.staging.myprojectestimates.com',
+            'fd.staging.inscyth.com'
+        ]
+        # 'bjs.staging.inscyth.com',
+        # 'cabinetstogo.staging.inscyth.com',
+        # 'cliqstudios.staging.inscyth.com',
+        # 'flooringliquidators.staging.inscyth.com',
+        # 'homeoutlet.staging.inscyth.com',
+        # 'lowes.staging.inscyth.com',
+        # 'lowesime.staging.inscyth.com',
+        # 'thertastore.staging.inscyth.com',
+        # 'wholesalecabinets.staging.inscyth.com'
 
         # retailers = [
-        #     'bjs.staging.myprojectestimates.com',
-        #     'cabinetstogo.staging.myprojectestimates.com',
-        #     'cliqstudios.staging.myprojectestimates.com',
-        #     'flooranddecor.staging.myprojectestimates.com',
-        #     'flooringliquidators.staging.myprojectestimates.com',
-        #     'homeoutlet.staging.myprojectestimates.com',
-        #     'lowes.staging.myprojectestimates.com',
-        #     'lowesime.staging.myprojectestimates.com'
-        #     'thertastore.staging.myprojectestimates.com',
-        #     'wholesalecabinets.staging.myprojectestimates.com',
-        #     'bjs.staging.inscyth.com',
-        #     'cabinetstogo.staging.inscyth.com',
-        #     'cliqstudios.staging.inscyth.com',
-        #     'fd.staging.inscyth.com',
-        #     'flooringliquidators.staging.inscyth.com',
-        #     'homeoutlet.staging.inscyth.com',
-        #     'lowes.staging.inscyth.com',
-        #     'lowesime.staging.inscyth.com',
-        #     'thertastore.staging.inscyth.com',
-        #     'wholesalecabinets.staging.inscyth.com'
+        #     'bjs.qa.myprojectestimates.com',
+        #     'cabinetstogo.qa.myprojectestimates.com',
+        #     'cliqstudios.qa.myprojectestimates.com',
+        #     'flooranddecor.qa.myprojectestimates.com',
+        #     'flooringliquidators.qa.myprojectestimates.com',
+        #     'homeoutlet.qa.myprojectestimates.com',
+        #     'lowes.qa.myprojectestimates.com',
+        #     'lowesime.qa.myprojectestimates.com',
+        #     'lowesime.qa.myprojectestimates.com',
+        #     'thertastore.qa.myprojectestimates.com',
+        #     'wholesalecabinets.qa.myprojectestimates.com',
+        #     'fd.qa.inscyth.com'
         # ]
-
-        retailers = [
-            'bjs.qa.myprojectestimates.com',
-            'cabinetstogo.qa.myprojectestimates.com',
-            'cliqstudios.qa.myprojectestimates.com',
-            'flooranddecor.qa.myprojectestimates.com',
-            'flooringliquidators.qa.myprojectestimates.com',
-            'homeoutlet.qa.myprojectestimates.com',
-            'lowes.qa.myprojectestimates.com',
-            'lowesime.qa.myprojectestimates.com',
-            'lowesime.qa.myprojectestimates.com',
-            'thertastore.qa.myprojectestimates.com',
-            'wholesalecabinets.qa.myprojectestimates.com',
-            'fd.qa.inscyth.com'
-        ]
 
         for item in retailers:
             response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': item})
