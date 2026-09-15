@@ -6,8 +6,8 @@ from .data_EPM import EPM_DATA_toREPLACE
 
 class TestEPM(BaseCase):
 
-    def get_payload(self,
-                    product_id,
+    @staticmethod
+    def get_payload(product_id,
                     type_id,
                     zip_code,
                     store_id,
@@ -39,7 +39,7 @@ class TestEPM(BaseCase):
 
     @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREPLACE)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer):
-        # Формуємо payload
+        # Form the payload
         current_payload = self.get_payload(
             sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id
         )
@@ -50,7 +50,7 @@ class TestEPM(BaseCase):
         response_json = response.json()
         assert len(response_json["productsToReplace"]) != 0, f"Mapping error! Expected {expected_product_id} a product to replace for productID: {sent_product_id}, but no matching product returned to replace."
         assert "newProductID" in response_json["productsToReplace"][0], "Response JSON does not contain 'newProductID' field"
-        # Отримуємо newProductID, який фактично повернув сервер
+        # Getting newProductID returned by server
         received_product_id = response_json["productsToReplace"][0]["newProductID"]
 
         assert received_product_id == expected_product_id, f"Mapping error! Sent productID: {sent_product_id}. Expected to get: {expected_product_id}, but actually received: {received_product_id}"
