@@ -6,7 +6,8 @@ from requests import Response
 
 
 class BaseCase:
-    base_url = "https://ee-api-ssi.staging.inscyth.com/"
+    base_url = "https://ee-api-ssi.qa.inscyth.com/"
+    #     base_url = "https://ee-api-ssi.staging.inscyth.com/"
     tokens_list = {}
 
     def setup_class(self):
