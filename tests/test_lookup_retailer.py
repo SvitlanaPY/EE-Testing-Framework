@@ -3,6 +3,7 @@ import requests
 from lib.base_case import BaseCase
 from .data_lookup_retailer import parametersList
 
+
 class TestLookupRetailer(BaseCase):
 
     @pytest.mark.parametrize('client_Host, expected_api_HostName, expected_retailer_Code', parametersList)
@@ -14,7 +15,6 @@ class TestLookupRetailer(BaseCase):
         response_as_dict = response.json()
         assert response_as_dict['apiHostname'] == expected_api_HostName, f"Expected apiHostname: {expected_api_HostName}, but got: {response_as_dict['apiHostname']}"
         assert response_as_dict['retailerCode'] == expected_retailer_Code, f"Expected retailerCode: {expected_retailer_Code}, but got: {response_as_dict['retailerCode']}"
-
 
     def test_lookup_retailer_invalid_clientHost(self):
         invalid_clientHost = "invalid.clienthost.com"
