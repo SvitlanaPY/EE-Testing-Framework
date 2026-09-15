@@ -6,8 +6,8 @@ from .data_EPM import EPM_DATA_toREMOVE
 
 class TestEPM(BaseCase):
 
-    def get_payload(self,
-                    product_id,
+    @staticmethod
+    def get_payload(product_id,
                     type_id,
                     zip_code,
                     store_id,
@@ -40,7 +40,7 @@ class TestEPM(BaseCase):
     @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREMOVE)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, zip_code, store_id,
                                      material_id, material_name, color_id, color_name, qte_grp_id, retailer):
-        # Формуємо payload
+        # Form the payload
         current_payload = self.get_payload(
             sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id
         )
@@ -51,7 +51,7 @@ class TestEPM(BaseCase):
         response_json = response.json()
         assert len(response_json["productsToRemove"]) != 0, f"Mapping error! Expected productID: {sent_product_id} to be removed, but no product returned to remove."
         assert "productId" in response_json["productsToRemove"][0], "Response JSON does not contain 'productId' field"
-        # Отримуємо newProductID, який повернув сервер
+        # Getting newProductID returned by server
         received_product_id = response_json["productsToRemove"][0]["productId"]
 
         assert received_product_id == sent_product_id, f"Mapping error! Sent productID {sent_product_id} is not removed."
