@@ -9,7 +9,7 @@ class TestStores(BaseCase):
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'adPatchId', 'latitude', 'longitude']
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
-    def test_get_six_stores(self, Zip_Code):
+    def test_stores_get_six_stores(self, Zip_Code):
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -17,7 +17,7 @@ class TestStores(BaseCase):
         assert len(response_as_dict) <= 6, 'Returned stores are more than 6'
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
-    def test_response_structure(self, Zip_Code):
+    def test_stores_response_structure(self, Zip_Code):
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -26,7 +26,7 @@ class TestStores(BaseCase):
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
 
     @pytest.mark.parametrize('Zip_Code', parametersList1)
-    def test_first_nearest_store(self, Zip_Code):
+    def test_stores_first_nearest_store(self, Zip_Code):
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -36,7 +36,7 @@ class TestStores(BaseCase):
             assert min_distance <= store['distance'], 'The first store is not the nearest one'
 
     @pytest.mark.parametrize('Zip_Code, Store_Id', parametersList2)
-    def test_same_adpatch_as_given_store(self, Zip_Code, Store_Id):
+    def test_stores_same_adpatch_as_given_store(self, Zip_Code, Store_Id):
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code, 'storeId': Store_Id}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -47,7 +47,7 @@ class TestStores(BaseCase):
         # for store in response_as_dict:
         #     assert store['adPatchId'] == expected_adPatchId, f"Wrong adPatchId for {store['companyId']}"
 
-    def test_negative_validation_error(self):
+    def test_negative_stores_validation_error(self):
         invalidZip = '0745'
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': invalidZip}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 422, 'Wrong status code - 422:UNPROCESSABLE CONTENT is expected'
