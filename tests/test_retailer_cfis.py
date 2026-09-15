@@ -10,7 +10,7 @@ class TestRetailerCFIs(BaseCase):
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'deliveryStore']
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
-    def test_retailer_cfis_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
+    def test_retailerCFIs_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
                                 params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -23,7 +23,7 @@ class TestRetailerCFIs(BaseCase):
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
-    def test_first_cfi_is_nearest(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
+    def test_retailerCFIs_first_cfi_is_nearest(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
                                 params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -39,7 +39,7 @@ class TestRetailerCFIs(BaseCase):
         #     assert response_as_dict[i + 1]['distance'] >= min_distance, "The first cfi is not the nearest one"
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
-    def test_distance_by_extra_service_radius_miles(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
+    def test_retailerCFIs_distance_by_extra_service_radius_miles(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
         response = requests.get(f"{self.base_url}retailer/cfis",
                                 params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID},
                                 headers={"Authorization": self.tokens_list.get(retailer)})
@@ -52,7 +52,7 @@ class TestRetailerCFIs(BaseCase):
             assert cfi['distance'] <= radius, 'CFI distance is greater than extra service radius.'
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer', parametersList_ValidAddress)
-    def test_distance_is_changed_by_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
+    def test_retailerCFIs_distance_is_changed_by_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
         response_no_address = requests.get(f"{self.base_url}retailer/cfis",
                                            params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
                                            headers={"Authorization": self.tokens_list.get(retailer)})
@@ -82,7 +82,7 @@ class TestRetailerCFIs(BaseCase):
                     break
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer', parametersList_inValidAddress)
-    def test_distance_not_changed_by_wrong_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
+    def test_retailerCFIs_distance_not_changed_by_wrong_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
         response_no_address = requests.get(f"{self.base_url}retailer/cfis",
                                            params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
                                            headers={"Authorization": self.tokens_list.get(retailer)})
@@ -110,7 +110,7 @@ class TestRetailerCFIs(BaseCase):
                     assert deliveryStore_storeID_noAddress == deliveryStore_storeID_wAddress or cfi_no_address['distance'] == cfi_w_address['distance'], "Defining the invalid project's installation address does affect the distance to the CFI."
                     break
 
-    def test_negative_bad_zip(self):
+    def test_negative_retailerCFIs_invalid_zip(self):
         invalidZip = '11111'
         response = requests.get(f"{self.base_url}retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059},
                                 headers={"Authorization": self.tokens_list.get('cliqstudios')})
