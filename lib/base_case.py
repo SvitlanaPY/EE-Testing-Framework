@@ -36,20 +36,6 @@ class BaseCase:
         # 'thertastore.staging.inscyth.com',
         # 'wholesalecabinets.staging.inscyth.com'
 
-        # retailers = [
-        #     'bjs.qa.myprojectestimates.com',
-        #     'cabinetstogo.qa.myprojectestimates.com',
-        #     'cliqstudios.qa.myprojectestimates.com',
-        #     'flooranddecor.qa.myprojectestimates.com',
-        #     'flooringliquidators.qa.myprojectestimates.com',
-        #     'homeoutlet.qa.myprojectestimates.com',
-        #     'lowes.qa.myprojectestimates.com',
-        #     'lowesime.qa.myprojectestimates.com',
-        #     'lowesime.qa.myprojectestimates.com',
-        #     'thertastore.qa.myprojectestimates.com',
-        #     'wholesalecabinets.qa.myprojectestimates.com',
-        #     'fd.qa.inscyth.com'
-        # ]
 
         for item in retailers:
             response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': item})
