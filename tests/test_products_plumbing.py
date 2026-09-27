@@ -59,10 +59,10 @@ class TestProductsPlumbing(BaseCase):
             "consumerDesc": {"type": ["string", "null"]},
             "expirationPromotionDate": {"type": ["string", "null"]},
             "imageUrl": {"type": "string"},
-            "masterSku": {"type": "string"},
+            "masterSku": {"type": ["string", "null"]},
             "name": {"type": "string"},
             "price": {"type": "number"},
-            "priceWithoutDiscount": {"type": "number"},
+            "priceWithoutDiscount": {"type": ["number", "null"]},
             "productId": {"type": "integer"},
             "promos": {
                 "type": "array",
