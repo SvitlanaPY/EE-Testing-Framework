@@ -1,3 +1,5 @@
+from operator import and_
+
 import pytest
 import requests
 from lib.base_case import BaseCase
@@ -107,7 +109,7 @@ class TestRetailerCFIs(BaseCase):
                         deliveryStore_storeID_wAddress = ""
                     else:
                         deliveryStore_storeID_wAddress = cfi_w_address.get('deliveryStore')['storeId']
-                    assert deliveryStore_storeID_noAddress == deliveryStore_storeID_wAddress or cfi_no_address['distance'] == cfi_w_address['distance'], "Defining the invalid project's installation address does affect the distance to the CFI."
+                    assert deliveryStore_storeID_noAddress == deliveryStore_storeID_wAddress and cfi_no_address['distance'] == cfi_w_address['distance'], "Defining the invalid project's installation address does affect the distance to the CFI."
                     break
 
     def test_negative_retailerCFIs_invalid_zip(self):
