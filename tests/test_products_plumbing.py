@@ -7,7 +7,7 @@ from .data_products_plumbing import parametersList
 
 class TestProductsPlumbing(BaseCase):
     """
-    Перевірка JSON-структури відповіді за Swagger Example Value:
+    Verify response of the JSON-structure according to the Swagger Example Value:
     [
         {
         "productId": 0,
@@ -101,7 +101,7 @@ class TestProductsPlumbing(BaseCase):
         try:
             validate(instance=json_element, schema=self.PRODUCT_SCHEMA)
         except ValidationError as error:
-            assert False, f"Response schema mismatch for /products/plumbing endpoint in json-property: {error.json_path}, {error.message}"
+            assert False, f"Response schema mismatches for /products/plumbing endpoint in json-property: {error.json_path}, {error.message}"
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsPlumbing_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
