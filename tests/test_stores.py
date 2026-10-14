@@ -21,6 +21,9 @@ class TestStores(BaseCase):
         response = requests.get(f"{self.base_url}stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
+        response_json = response.json()
+        assert len(response_json) > 0, "None store is returned"
+
         response_as_dict = response.json()
         for key_name in self.json_keys:
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
