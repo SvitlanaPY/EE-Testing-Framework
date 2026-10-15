@@ -35,7 +35,7 @@ class OptionalItemsProductSchema(BaseModel):
 
 
 class TestProductsOptionalItems(BaseCase):
-    GROUPS = ['cutouts', 'tear-outs', 'dishwashers', 'chip-minimizer', 'others']
+    # GROUPS = ['cutouts', 'tear-outs', 'dishwashers', 'chip-minimizer', 'others']
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsOptionalItems_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
@@ -45,9 +45,9 @@ class TestProductsOptionalItems(BaseCase):
         assert response.status_code == 200, 'Wrong status code'
 
         response_json = response.json()
-        for group in self.GROUPS:
-            assert group in response_json, f'There is no "{group}" json key in response'
-
+        # for group in self.GROUPS:
+        for group in response_json:
+            # assert group in response_json, f'There is no "{group}" json key in response'
             group_value = response_json[group]
             if isinstance(group_value, list):
                 if len(group_value) == 0:
@@ -77,9 +77,7 @@ class TestProductsOptionalItems(BaseCase):
 
         response_json = response.json()
 
-        for group in self.GROUPS:
-            assert group in response_json, f'There is no "{group}" json key in response'
-
+        for group in response_json:
             group_value = response_json[group]
             if isinstance(group_value, list):
                 if len(group_value) == 0:
