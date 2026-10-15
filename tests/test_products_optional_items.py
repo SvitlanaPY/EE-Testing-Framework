@@ -54,7 +54,6 @@ class TestProductsOptionalItems(BaseCase):
                     continue
                 else:
                     first_item = group_value[0]
-
             else:
                 if group_value is None:
                     continue
@@ -82,7 +81,6 @@ class TestProductsOptionalItems(BaseCase):
             assert group in response_json, f'There is no "{group}" json key in response'
 
             group_value = response_json[group]
-
             if isinstance(group_value, list):
                 if len(group_value) == 0:
                     continue
