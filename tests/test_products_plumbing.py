@@ -1,91 +1,44 @@
+from typing import List, Optional
+
 import pytest
 import requests
-from jsonschema import ValidationError, validate
+from pydantic import BaseModel, ValidationError
 from lib.base_case import BaseCase
 from .data_products_plumbing import parametersList
 
 
-class TestProductsPlumbing(BaseCase):
-    """
-    Verify response of the JSON-structure according to the Swagger Example Value:
-    [
-        {
-        "productId": 0,
-        "name": "string",
-        "consumerDesc": "string",
-        "abbrevDesc": "string",
-        "price": 0,
-        "priceWithoutDiscount": 0,
-        "expirationPromotionDate": "2026-09-13T17:52:16.383Z",
-        "imageUrl": "string",
-        "unitOfMeasure": "string",
-        "qteTypeId": 0,
-        "qteTypeCode": "string",
-        "qteCodeId": 0,
-        "qteCode": "string",
-        "qteSubCodeId": 0,
-        "qteSubCode": "string",
-        "promos": [
-          {"id": 0, "quantity": 0, "maxQty": 0, "colorProductIds": "string"}
-        ],
-        "masterSku": "string"
-        }
-    ]
-    """
+class PlumbingPromoSchema(BaseModel):
+    id: Optional[int]
+    quantity: Optional[int]
+    maxQty: Optional[int]
+    colorProductIds: Optional[str]
 
-    PRODUCT_SCHEMA = {
-        "type": "object",
-        "required": [
-            "productId",
-            "name",
-            "consumerDesc",
-            "abbrevDesc",
-            "price",
-            "priceWithoutDiscount",
-            "expirationPromotionDate",
-            "imageUrl",
-            "unitOfMeasure",
-            "qteTypeId",
-            "qteTypeCode",
-            "qteCodeId",
-            "qteCode",
-            "qteSubCodeId",
-            "qteSubCode",
-            "promos",
-            "masterSku",
-        ],
-        "properties": {
-            "abbrevDesc": {"type": ["string", "null"]},
-            "consumerDesc": {"type": ["string", "null"]},
-            "expirationPromotionDate": {"type": ["string", "null"]},
-            "imageUrl": {"type": "string"},
-            "masterSku": {"type": ["string", "null"]},
-            "name": {"type": "string"},
-            "price": {"type": "number"},
-            "priceWithoutDiscount": {"type": ["number", "null"]},
-            "productId": {"type": "integer"},
-            "promos": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "required": ["id", "quantity", "maxQty", "colorProductIds"],
-                    "properties": {
-                        "colorProductIds": {"type": ["string", "null"]},
-                        "id": {"type": "integer"},
-                        "maxQty": {"type": "integer"},
-                        "quantity": {"type": "integer"},
-                    },
-                },
-            },
-            "qteCodeId": {"type": ["integer", "null"]},
-            "qteCode": {"type": ["string", "null"]},
-            "qteSubCodeId": {"type": ["integer", "null"]},
-            "qteSubCode": {"type": ["string", "null"]},
-            "qteTypeCode": {"type": "string"},
-            "qteTypeId": {"type": "integer"},
-            "unitOfMeasure": {"type": ["string", "null"]},
-        },
-    }
+
+class PlumbingProductSchema(BaseModel):
+    """
+    Schema according to the Swagger Example Value for GET /products/plumbing.
+    Fields without a default value are REQUIRED (Optional[...] only allows null).
+    """
+    productId: int
+    name: str
+    consumerDesc: Optional[str]
+    abbrevDesc: Optional[str]
+    price: float
+    priceWithoutDiscount: Optional[float]
+    expirationPromotionDate: Optional[str]
+    imageUrl: Optional[str]
+    unitOfMeasure: Optional[str]
+    qteTypeId: int
+    qteTypeCode: str
+    qteCodeId: Optional[int]
+    qteCode: Optional[str]
+    qteSubCodeId: Optional[int]
+    qteSubCode: Optional[str]
+    promos: List[PlumbingPromoSchema]
+    masterSku: str
+
+
+class TestProductsPlumbing(BaseCase):
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsPlumbing_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
@@ -97,11 +50,11 @@ class TestProductsPlumbing(BaseCase):
         response_json = response.json()
         assert len(response_json) > 0, "None product is returned"
 
-        json_element = response_json[0]
         try:
-            validate(instance=json_element, schema=self.PRODUCT_SCHEMA)
+            # Validates only first product in the list
+            PlumbingProductSchema(**response_json[0])
         except ValidationError as error:
-            assert False, f"Response schema mismatches for /products/plumbing endpoint in json-property: {error.json_path}, {error.message}"
+            assert False, f"Response schema mismatches for /products/plumbing endpoint:\n{error}"
 
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsPlumbing_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
