@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from data.data_products_materials import parametersList
+from testing_data.data_products_materials import parametersList
 
 
 class TestProductsMaterials(BaseCase):
