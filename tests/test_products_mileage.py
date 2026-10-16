@@ -2,9 +2,9 @@ from typing import List, Optional
 
 import pytest
 import requests
-from pydantic import BaseModel, TypeAdapter, ValidationError
+from pydantic import BaseModel, ValidationError
 from lib.base_case import BaseCase
-from .data_products_mileage import parametersList
+from data.data_products_mileage import parametersList
 
 
 class MileagePromoSchema(BaseModel):
