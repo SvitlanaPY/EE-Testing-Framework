@@ -4,7 +4,7 @@ import pytest
 import requests
 from pydantic import BaseModel, ValidationError
 from lib.base_case import BaseCase
-from .data_products_optional_items import parametersList
+from data.data_products_optional_items import parametersList
 
 
 class OptionalItemsPromoSchema(BaseModel):
