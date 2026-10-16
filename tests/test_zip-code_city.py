@@ -1,8 +1,8 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from data.data_zipCode_City import parametersList
-from data.data_zipCode_City import parametersListNegative
+from testing_data.data_zipCode_City import parametersList
+from testing_data.data_zipCode_City import parametersListNegative
 
 
 class TestZipCodeCity(BaseCase):
