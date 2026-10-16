@@ -1,9 +1,9 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from data.data_retailer_cfis import parametersList
-from data.data_retailer_cfis import parametersList_ValidAddress
-from data.data_retailer_cfis import parametersList_inValidAddress
+from testing_data.data_retailer_cfis import parametersList
+from testing_data.data_retailer_cfis import parametersList_ValidAddress
+from testing_data.data_retailer_cfis import parametersList_inValidAddress
 
 
 class TestRetailerCFIs(BaseCase):
