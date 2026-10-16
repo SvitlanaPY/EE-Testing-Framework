@@ -1,8 +1,8 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .data_zipCode import parametersList
-from .data_zipCode import parametersListNegative
+from data.data_zipCode import parametersList
+from data.data_zipCode import parametersListNegative
 
 
 # Latitude is specified in degrees within the range [-90, 90].
