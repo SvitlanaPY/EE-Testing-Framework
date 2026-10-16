@@ -4,7 +4,7 @@ import pytest
 import requests
 from pydantic import BaseModel, ValidationError
 from lib.base_case import BaseCase
-from data.data_products_mileage import parametersList
+from testing_data.data_products_mileage import parametersList
 
 
 class MileagePromoSchema(BaseModel):
