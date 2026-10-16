@@ -1,3 +1,6 @@
 .idea/*
-.pytest_cache
+.pytest_cache/
 __pycache__/
+NotUsed/
+allure-results/
+allure-report_*
