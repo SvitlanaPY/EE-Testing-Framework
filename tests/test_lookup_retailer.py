@@ -1,7 +1,7 @@
 import pytest
 import requests
 from lib.base_case import BaseCase
-from .data_lookup_retailer import parametersList
+from data.data_lookup_retailer import parametersList
 
 
 class TestLookupRetailer(BaseCase):
