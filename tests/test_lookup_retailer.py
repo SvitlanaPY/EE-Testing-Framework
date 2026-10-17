@@ -1,11 +1,14 @@
+import allure
 import pytest
 import requests
 from lib.base_case import BaseCase
 from testing_data.data_lookup_retailer import parametersList
 
 
+@allure.feature("GET /lookup/retailer")
 class TestLookupRetailer(BaseCase):
 
+    @allure.title("Check retailer validation for client: {client_Host}")
     @pytest.mark.parametrize('client_Host, expected_api_HostName, expected_retailer_Code', parametersList)
     def test_lookup_retailer_validation_clientHost(self, client_Host, expected_api_HostName, expected_retailer_Code):
         response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': client_Host})
@@ -16,6 +19,7 @@ class TestLookupRetailer(BaseCase):
         assert response_as_dict['apiHostname'] == expected_api_HostName, f"Expected apiHostname: {expected_api_HostName}, but got: {response_as_dict['apiHostname']}"
         assert response_as_dict['retailerCode'] == expected_retailer_Code, f"Expected retailerCode: {expected_retailer_Code}, but got: {response_as_dict['retailerCode']}"
 
+    @allure.title("Check retailer search with invalid client: {client_Host}")
     def test_lookup_retailer_invalid_clientHost(self):
         invalid_clientHost = "invalid.clienthost.com"
         response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': invalid_clientHost})
