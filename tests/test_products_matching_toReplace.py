@@ -1,9 +1,11 @@
+import allure
 import pytest
 import requests
 from lib.base_case import BaseCase
 from testing_data.data_EPM import EPM_DATA_toREPLACE
 
 
+@allure.feature("POST /products/matching - products to remove")
 class TestEPM(BaseCase):
 
     @staticmethod
@@ -17,7 +19,7 @@ class TestEPM(BaseCase):
                     color_name,
                     qte_grp_id
                     ):
-        """Хелпер-метод для динамічного формування payload"""
+        """Helper-method for creating dynamical payload"""
         return {
             "products": [{"productID": product_id, "typeID": type_id}],
             "targetParams": {
@@ -37,6 +39,7 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
+    @allure.title("Check EPM products to replace: sent {sent_product_id} -> expected {expected_product_id} (Material: {material_name} for Retailer: {retailer})")
     @pytest.mark.parametrize("sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREPLACE)
     def test_EPM_products_to_replace(self, sent_product_id, sent_type_id, expected_product_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer):
         # Form the payload
