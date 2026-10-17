@@ -3,3 +3,5 @@ requests
 pytest
 jsonschema
 pydantic
+
+allure-python-commons
