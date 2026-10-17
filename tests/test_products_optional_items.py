@@ -1,5 +1,5 @@
 from typing import List, Optional
-
+import allure
 import pytest
 import requests
 from pydantic import BaseModel, ValidationError
@@ -34,9 +34,11 @@ class OptionalItemsProductSchema(BaseModel):
     masterSku: str
 
 
+@allure.feature("GET /products/optional-items")
 class TestProductsOptionalItems(BaseCase):
     # GROUPS = ['cutouts', 'tear-outs', 'dishwashers', 'chip-minimizer', 'others']
 
+    @allure.title("Check response schema for products/optional-items (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsOptionalItems_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(f"{self.base_url}products/optional-items",
@@ -66,6 +68,7 @@ class TestProductsOptionalItems(BaseCase):
             except ValidationError as error:
                 assert False, f'Response schema mismatches for /products/optional-items endpoint in group "{group}":\n{error}'
 
+    @allure.title("Check required fields content for products/optional-items (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsOptionalItems_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(
