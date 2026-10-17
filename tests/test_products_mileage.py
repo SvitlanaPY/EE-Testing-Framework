@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+import allure
 import pytest
 import requests
 from pydantic import BaseModel, ValidationError
@@ -38,8 +39,10 @@ class MileageProductSchema(BaseModel):
     masterSku: str
 
 
+@allure.feature("GET /products/mileage")
 class TestProductsMileage(BaseCase):
 
+    @allure.title("Check response schema for products/mileage (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsMileage_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(f"{self.base_url}products/mileage",
@@ -58,6 +61,7 @@ class TestProductsMileage(BaseCase):
         except ValidationError as error:
             assert False, f"Response schema mismatches for /products/mileage endpoint:\n{error}"
 
+    @allure.title("Check required fields content for products/mileage (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsMileage_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         response = requests.get(f"{self.base_url}products/mileage",
