@@ -1,3 +1,4 @@
+import allure
 import pytest
 import requests
 from lib.base_case import BaseCase
@@ -5,8 +6,10 @@ from testing_data.data_zipCode_City import parametersList
 from testing_data.data_zipCode_City import parametersListNegative
 
 
+@allure.feature("GET /zip-code/city")
 class TestZipCodeCity(BaseCase):
 
+    @allure.title("Check city and state search by ZIP code: {ZIP_Code} (Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state, retailer', parametersList)
     def test_zipCodeCity_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state, retailer):
         response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
@@ -22,6 +25,7 @@ class TestZipCodeCity(BaseCase):
         # actual_state = self.get_json_value(response, "state")
         assert actual_state.upper() == expected_state.upper(), 'Actual state_parameter is INcorrect'
 
+    @allure.title("Check negative ZIP code search - not found for ZIP: {ZIP_Code} (Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, retailer', parametersListNegative)
     def test_negative_zipCodeCity_city_state_notFound(self, ZIP_Code, retailer):
         response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
