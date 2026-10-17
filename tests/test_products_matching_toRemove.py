@@ -1,9 +1,11 @@
+import allure
 import pytest
 import requests
 from lib.base_case import BaseCase
 from testing_data.data_EPM import EPM_DATA_toREMOVE
 
 
+@allure.feature("POST /products/matching - products to remove")
 class TestEPM(BaseCase):
 
     @staticmethod
@@ -37,6 +39,7 @@ class TestEPM(BaseCase):
             "retailerId": 0
         }
 
+    @allure.title("Check EPM products to remove for product ID: {sent_product_id} (Material: {material_name} for Retailer: {retailer})")
     @pytest.mark.parametrize("sent_product_id, sent_type_id, zip_code, store_id, material_id, material_name, color_id, color_name, qte_grp_id, retailer", EPM_DATA_toREMOVE)
     def test_EPM_products_to_remove(self, sent_product_id, sent_type_id, zip_code, store_id,
                                      material_id, material_name, color_id, color_name, qte_grp_id, retailer):
