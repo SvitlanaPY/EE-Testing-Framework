@@ -1,13 +1,16 @@
+import allure
 import pytest
 import requests
 from lib.base_case import BaseCase
 from testing_data.data_products_materials import parametersList
 
 
+@allure.feature("GET /products/materials")
 class TestProductsMaterials(BaseCase):
     json_keys = ['attributes', 'colors', 'description', 'imageUrl', 'installedMinSqFt', 'isInstalled', 'jointPoints',
                  'materialID', 'prodOnlyMinSqFt', 'rank']
 
+    @allure.title("Check response structure for products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_response_structure(self, ZIP_Code, store_id, retailer):
 
@@ -21,6 +24,7 @@ class TestProductsMaterials(BaseCase):
         for key_name in self.json_keys:
             assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
 
+    @allure.title("Check colors availability in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_get_colors(self, ZIP_Code, store_id, retailer):
 
@@ -32,6 +36,7 @@ class TestProductsMaterials(BaseCase):
         for i in range(len(response_as_dict)):
             assert len(response_as_dict[i]['colors']) > 0, f"None color is returned"
 
+    @allure.title("Check materials sorting by rank in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
         response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id},
