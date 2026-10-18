@@ -5,7 +5,7 @@ from lib.base_case import BaseCase
 from testing_data.data_EPM import EPM_DATA_toREPLACE
 
 
-@allure.feature("POST /products/matching - products to remove")
+@allure.feature("POST /products/matching - products to replace")
 class TestEPM(BaseCase):
 
     @staticmethod
