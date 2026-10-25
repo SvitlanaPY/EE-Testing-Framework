@@ -14,7 +14,6 @@ class TestProductsMaterials(BaseCase):
     @allure.title("Check response structure for products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_response_structure(self, ZIP_Code, store_id, retailer):
-
         # response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
@@ -28,8 +27,6 @@ class TestProductsMaterials(BaseCase):
     @allure.title("Check colors availability in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_get_colors(self, ZIP_Code, store_id, retailer):
-
-        # response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
@@ -40,7 +37,6 @@ class TestProductsMaterials(BaseCase):
     @allure.title("Check materials sorting by rank in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
     def test_productsMaterials_sort_materials_by_rank(self, ZIP_Code, store_id, retailer):
-        # response = requests.get(f"{self.base_url}products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
