@@ -23,7 +23,6 @@ class TestLookupRetailer(BaseCase):
     @allure.title("Check retailer search with invalid client: {client_Host}")
     def test_lookup_retailer_invalid_clientHost(self):
         invalid_clientHost = "invalid.clienthost.com"
-        # response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': invalid_clientHost})
         response = EERequests.get(f"/lookup/retailer/", params={'clientHost': invalid_clientHost})
         assert response.status_code == 200, f"Expected status code 200 for invalid clientHost, but got {response.status_code}"
 
