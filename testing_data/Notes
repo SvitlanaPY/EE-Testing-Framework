@@ -1,0 +1,1 @@
+pytest; $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"; allure generate allure-results --single-file --clean -o "Results\temp_$timestamp"; Move-Item "Results\temp_$timestamp\index.html" "Results\allure_report_$timestamp.html"; Remove-Item "Results\temp_$timestamp" -Recurse
