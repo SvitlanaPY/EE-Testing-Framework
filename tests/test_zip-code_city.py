@@ -1,6 +1,7 @@
 import allure
 import pytest
-import requests
+# import requests
+from lib.ee_requests import EERequests
 from lib.base_case import BaseCase
 from testing_data.data_zipCode_City import parametersList
 from testing_data.data_zipCode_City import parametersListNegative
@@ -12,7 +13,8 @@ class TestZipCodeCity(BaseCase):
     @allure.title("Check city and state search by ZIP code: {ZIP_Code} (Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, expected_city, expected_state, retailer', parametersList)
     def test_zipCodeCity_search_city_state_by_zipCode(self, ZIP_Code, expected_city, expected_state, retailer):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
+        # response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
+        response = EERequests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
         assert 'city' in response.json(), "There is no city_parameter returned"
@@ -28,5 +30,6 @@ class TestZipCodeCity(BaseCase):
     @allure.title("Check negative ZIP code search - not found for ZIP: {ZIP_Code} (Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, retailer', parametersListNegative)
     def test_negative_zipCodeCity_city_state_notFound(self, ZIP_Code, retailer):
-        response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
+        # response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
+        response = EERequests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 404, 'Wrong status code - 404:NotFound is expected'
