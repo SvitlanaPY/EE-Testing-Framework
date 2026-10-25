@@ -47,7 +47,7 @@ class TestProductsMileage(BaseCase):
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsMileage_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         # response = requests.get(f"{self.base_url}products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
-        response = EERequests.get(f"{self.base_url}products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
+        response = EERequests.get(f"/products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
         response_json = response.json()
@@ -65,7 +65,7 @@ class TestProductsMileage(BaseCase):
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsMileage_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
         # response = requests.get(f"{self.base_url}products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
-        response = EERequests.get(f"{self.base_url}products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
+        response = EERequests.get(f"/products/mileage", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
         response_json = response.json()
