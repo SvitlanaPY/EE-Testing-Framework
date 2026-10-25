@@ -31,6 +31,5 @@ class TestZipCode(BaseCase):
     @allure.title("Check zipCode validation by invalid coordinates (Lat: {lat}, Long: {long}, Retailer: {retailer})")
     @pytest.mark.parametrize("lat, long, retailer", parametersListNegative)
     def test_negative_zipCode_validation_failures(self, lat, long, retailer):
-        # response = requests.get(f"{self.base_url}zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/zip-code", params={'latitude': lat, 'longitude': long}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 422, 'Wrong status code - 422:ValidationError is expected'
