@@ -2,11 +2,7 @@ from json.decoder import JSONDecodeError
 
 import requests
 from requests import Response
-
-
 # Response - це class в модулі requests
-
-
 class BaseCase:
     # base_url = "https://ee-api-ssi.qa.inscyth.com/"
     base_url = "https://ee-api-ssi.staging.inscyth.com/"
