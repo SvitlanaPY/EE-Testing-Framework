@@ -71,7 +71,6 @@ class TestProductsOptionalItems(BaseCase):
     @allure.title("Check required fields content for products/optional-items (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, retailer', parametersList)
     def test_productsOptionalItems_response_content(self, ZIP_Code, store_id, prodQteGrp_ID, retailer):
-        # response = requests.get(f"{self.base_url}products/optional-items", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/products/optional-items", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
