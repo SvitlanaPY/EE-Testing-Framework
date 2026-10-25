@@ -1,7 +1,7 @@
 import allure
 import pytest
 import requests
-from lib.ee_requests import EE_Requests
+from lib.ee_requests import EERequests
 from lib.base_case import BaseCase
 from testing_data.data_lookup_retailer import parametersList
 
@@ -13,7 +13,7 @@ class TestLookupRetailer(BaseCase):
     @pytest.mark.parametrize('client_Host, expected_api_HostName, expected_retailer_Code', parametersList)
     def test_lookup_retailer_validation_clientHost(self, client_Host, expected_api_HostName, expected_retailer_Code):
         # response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': client_Host})
-        response = EE_Requests.get(f"/lookup/retailer", params={'clientHost': client_Host})
+        response = EERequests.get(f"/lookup/retailer", params={'clientHost': client_Host})
         assert response.status_code == 200, 'Wrong status code'
 
         response_as_dict = response.json()
@@ -24,7 +24,7 @@ class TestLookupRetailer(BaseCase):
     def test_lookup_retailer_invalid_clientHost(self):
         invalid_clientHost = "invalid.clienthost.com"
         # response = requests.get(f"{self.base_url}lookup/retailer", params={'clientHost': invalid_clientHost})
-        response = EE_Requests.get(f"/lookup/retailer/", params={'clientHost': invalid_clientHost})
+        response = EERequests.get(f"/lookup/retailer/", params={'clientHost': invalid_clientHost})
         assert response.status_code == 200, f"Expected status code 200 for invalid clientHost, but got {response.status_code}"
 
         response_as_dict = response.json()
