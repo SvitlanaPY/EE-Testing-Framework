@@ -82,14 +82,14 @@ class TestRetailerCFIs(BaseCase):
     @allure.title("Check distance is not changed by invalid address (ZIP: {ZIP_Code}, Store: {store_id}, Address: {address}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer', parametersList_inValidAddress)
     def test_retailerCFIs_distance_not_changed_by_wrong_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
-        response_no_address = EERequests.get(f"{self.base_url}retailer/cfis",
+        response_no_address = EERequests.get(f"/retailer/cfis",
                                            params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
                                            headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_no_address.status_code == 200, 'Wrong status code'
 
         cfis_without_address = response_no_address.json()
 
-        response_with_address = EERequests.get(f"{self.base_url}retailer/cfis",
+        response_with_address = EERequests.get(f"/retailer/cfis",
                                              params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID, 'address': address, 'city': city, 'state': state},
                                              headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_with_address.status_code == 200, 'Wrong status code'
@@ -112,7 +112,7 @@ class TestRetailerCFIs(BaseCase):
     @allure.title("Check distance for invalid ZIP code")
     def test_negative_retailerCFIs_invalid_zip(self):
         invalidZip = '11111'
-        response = requests.get(f"{self.base_url}retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059},
+        response = EERequests.get(f"/retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059},
                                 headers={"Authorization": self.tokens_list.get('cliqstudios')})
         response_as_dict = response.json()
         assert response.status_code == 400, 'Wrong status code - 400:Bad Request is expected'
