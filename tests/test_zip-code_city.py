@@ -30,6 +30,5 @@ class TestZipCodeCity(BaseCase):
     @allure.title("Check negative ZIP code search - not found for ZIP: {ZIP_Code} (Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, retailer', parametersListNegative)
     def test_negative_zipCodeCity_city_state_notFound(self, ZIP_Code, retailer):
-        # response = requests.get(f"{self.base_url}zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         response = EERequests.get(f"/zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 404, 'Wrong status code - 404:NotFound is expected'
