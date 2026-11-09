@@ -1,4 +1,5 @@
 import requests
+from lib.logger import Logger
 
 
 class EERequests:
@@ -30,6 +31,8 @@ class EERequests:
         if json is None:
             json = {}
 
+        Logger.add_request(url, data, headers, cookies, json, method)
+
         if method == "GET":
             response = requests.get(f"{base_url}{url}", params=data, headers=headers, cookies=cookies)
         elif method == "POST":
@@ -40,5 +43,7 @@ class EERequests:
             response = requests.delete(f"{base_url}{url}", data=data, json=json, headers=headers, cookies=cookies)
         else:
             raise Exception(f"Invalid HTTP method: '{method}' was provided. Supported methods are: GET, POST, PUT, DELETE.")
+
+        Logger.add_response(response)
 
         return response
