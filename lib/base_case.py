@@ -1,12 +1,20 @@
 from json.decoder import JSONDecodeError
-
 import requests
 from requests import Response
 # Response - це class в модулі requests
+
 class BaseCase:
     # base_url = "https://ee-api-ssi.qa.inscyth.com/"
     base_url = "https://ee-api-ssi.staging.inscyth.com/"
     tokens_list = {}
+
+    @staticmethod
+    def get_json_body(response: Response):
+        try:
+            json_body = response.json()
+        except JSONDecodeError:
+            assert False, f"Response body is not a valid JSON. Response text: {response.text}"
+        return json_body
 
     def setup_class(self):
         retailers = [
