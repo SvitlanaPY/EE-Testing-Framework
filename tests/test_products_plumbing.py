@@ -49,7 +49,7 @@ class TestProductsPlumbing(BaseCase):
         response = EERequests.get(f"/products/plumbing", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_json = response.json()
+        response_json = BaseCase.get_json_body(response)
         assert len(response_json) > 0, "None product is returned"
 
         try:
@@ -64,7 +64,7 @@ class TestProductsPlumbing(BaseCase):
         response = EERequests.get(f"/products/plumbing", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_json = response.json()
+        response_json = BaseCase.get_json_body(response)
         assert len(response_json) > 0, "None product is returned"
         assert response_json[0]['productId'] is not None, "productId cannot be null"
         assert response_json[0]['name'] is not None, "name cannot be null"

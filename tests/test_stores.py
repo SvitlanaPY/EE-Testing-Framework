@@ -18,21 +18,8 @@ class TestStores(BaseCase):
         response = EERequests.get(f"/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        assert len(response_as_dict) <= 6, 'Returned stores are more than 6'
-
-    @allure.title("Check response structure for /stores (ZIP: {Zip_Code})")
-    @pytest.mark.parametrize('Zip_Code', parametersList1)
-    def test_stores_response_structure(self, Zip_Code):
-        response = EERequests.get(f"/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
-        assert response.status_code == 200, 'Wrong status code'
-
-        response_json = response.json()
-        assert len(response_json) > 0, "None store is returned"
-
-        response_as_dict = response.json()
-        for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key  in response'
+        response_json = BaseCase.get_json_body(response)
+        assert len(response_json) <= 6, 'Returned stores are more than 6'
 
     @allure.title("Check if the first store is the nearest one (ZIP: {Zip_Code})")
     @pytest.mark.parametrize('Zip_Code', parametersList1)
@@ -40,9 +27,9 @@ class TestStores(BaseCase):
         response = EERequests.get(f"/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        min_distance = response_as_dict[0]['distance']
-        for store in response_as_dict:
+        response_json = BaseCase.get_json_body(response)
+        min_distance = response_json[0]['distance']
+        for store in response_json:
             assert min_distance <= store['distance'], 'The first store is not the nearest one'
 
     @allure.title("Check same adPatchId as given store adPatch: {expected_adPatchId} (ZIP: {Zip_Code}, Store ID: {Store_Id})")
@@ -51,11 +38,11 @@ class TestStores(BaseCase):
         response = EERequests.get(f"/stores", params={'ZipCode': Zip_Code, 'storeId': Store_Id}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        expected_adPatchId = response_as_dict[0]['adPatchId']
+        response_json = BaseCase.get_json_body(response)
+        expected_adPatchId = response_json[0]['adPatchId']
         allure.dynamic.title(f"Check same adPatchId as given store adPatch: {expected_adPatchId} (ZIP: {Zip_Code}, Store ID: {Store_Id})")
-        for i in range(1, len(response_as_dict)):
-            assert response_as_dict[i]['adPatchId'] == expected_adPatchId, f"Wrong adPatchId for {response_as_dict[i]['companyId']}"
+        for i in range(1, len(response_json)):
+            assert response_json[i]['adPatchId'] == expected_adPatchId, f"Wrong adPatchId for {response_json[i]['companyId']}"
         # for store in response_as_dict:
         #     assert store['adPatchId'] == expected_adPatchId, f"Wrong adPatchId for {store['companyId']}"
 
@@ -64,6 +51,18 @@ class TestStores(BaseCase):
         invalidZip = '0745'
         response = EERequests.get(f"/stores", params={'ZipCode': invalidZip}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
         assert response.status_code == 422, 'Wrong status code - 422:UNPROCESSABLE CONTENT is expected'
+        # response_json = BaseCase.get_json_body(response)
+        # assert response_json['validationErrors'][0]['errorMessage'] == 'Zipcode should be 5 digits', 'Wrong error message'
 
-        # response_as_dict = response.json()
-        # assert response_as_dict['validationErrors'][0]['errorMessage'] == 'Zipcode should be 5 digits', 'Wrong error message'
+    @allure.title("Check response structure for /stores (ZIP: {Zip_Code})")
+    @pytest.mark.parametrize('Zip_Code', parametersList1)
+    def test_stores_response_structure(self, Zip_Code):
+        response = EERequests.get(f"/stores", params={'ZipCode': Zip_Code}, headers={"Authorization": self.tokens_list.get('flooranddecor')})
+        assert response.status_code == 200, 'Wrong status code'
+
+        response_json = BaseCase.get_json_body(response)
+        assert len(response_json) > 0, "None store is returned"
+
+        response_json = BaseCase.get_json_body(response)
+        for key_name in self.json_keys:
+            assert key_name in response_json[0], f'There is no "{key_name}" json key  in response'

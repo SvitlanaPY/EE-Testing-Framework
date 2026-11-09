@@ -12,19 +12,6 @@ from testing_data.data_retailer_cfis import parametersList_inValidAddress
 class TestRetailerCFIs(BaseCase):
     json_keys = ['companyId', 'companyName', 'address', 'city', 'state', 'zip', 'distance', 'deliveryStore']
 
-    @allure.title("Check response structure for retailer/cfis (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Radius: {radius}, Retailer: {retailer})")
-    @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
-    def test_retailerCFIs_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
-        # response = requests.get(f"{self.base_url}retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
-        response = EERequests.get(f"/retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
-        assert response.status_code == 200, 'Wrong status code'
-
-        response_as_dict = response.json()
-        assert len(response_as_dict) > 0, "None cfi is returned"
-
-        for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
-
     @allure.title("Check if the first CFI is the nearest one (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Radius: {radius}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
     def test_retailerCFIs_first_cfi_is_nearest(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
@@ -82,16 +69,12 @@ class TestRetailerCFIs(BaseCase):
     @allure.title("Check distance is not changed by invalid address (ZIP: {ZIP_Code}, Store: {store_id}, Address: {address}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer', parametersList_inValidAddress)
     def test_retailerCFIs_distance_not_changed_by_wrong_address(self, ZIP_Code, store_id, prodQteGrp_ID, address, city, state, retailer):
-        response_no_address = EERequests.get(f"/retailer/cfis",
-                                           params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID},
-                                           headers={"Authorization": self.tokens_list.get(retailer)})
+        response_no_address = EERequests.get(f"/retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_no_address.status_code == 200, 'Wrong status code'
 
         cfis_without_address = response_no_address.json()
 
-        response_with_address = EERequests.get(f"/retailer/cfis",
-                                             params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID, 'address': address, 'city': city, 'state': state},
-                                             headers={"Authorization": self.tokens_list.get(retailer)})
+        response_with_address = EERequests.get(f"/retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpId': prodQteGrp_ID, 'address': address, 'city': city, 'state': state}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response_with_address.status_code == 200, 'Wrong status code'
         cfis_with_address = response_with_address.json()
 
@@ -112,9 +95,21 @@ class TestRetailerCFIs(BaseCase):
     @allure.title("Check distance for invalid ZIP code")
     def test_negative_retailerCFIs_invalid_zip(self):
         invalidZip = '11111'
-        response = EERequests.get(f"/retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059},
-                                headers={"Authorization": self.tokens_list.get('cliqstudios')})
-        response_as_dict = response.json()
+        response = EERequests.get(f"/retailer/cfis", params={'ZipCode': invalidZip, 'prodQteGrpId': 720, 'storeId': 28059}, headers={"Authorization": self.tokens_list.get('cliqstudios')})
+        response_json = BaseCase.get_json_body(response)
         assert response.status_code == 400, 'Wrong status code - 400:Bad Request is expected'
-        assert response_as_dict['errorCode'] == "BAD_ZIP", 'Wrong error code - "BAD_ZIP" is expected.'
-        assert response_as_dict['errorMessage'] == "Can not find a zip", 'Wrong error message - "Can not find a zip" is expected.'
+        assert response_json['errorCode'] == "BAD_ZIP", 'Wrong error code - "BAD_ZIP" is expected.'
+        assert response_json['errorMessage'] == "Can not find a zip", 'Wrong error message - "Can not find a zip" is expected.'
+
+    @allure.title("Check response structure for retailer/cfis (ZIP: {ZIP_Code}, Store: {store_id}, QteGrp: {prodQteGrp_ID}, Radius: {radius}, Retailer: {retailer})")
+    @pytest.mark.parametrize('ZIP_Code, store_id, prodQteGrp_ID, radius, retailer', parametersList)
+    def test_retailerCFIs_response_structure(self, ZIP_Code, store_id, prodQteGrp_ID, radius, retailer):
+        # response = requests.get(f"{self.base_url}retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
+        response = EERequests.get(f"/retailer/cfis", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
+        assert response.status_code == 200, 'Wrong status code'
+
+        response_json = BaseCase.get_json_body(response)
+        assert len(response_json) > 0, "None cfi is returned"
+
+        for key_name in self.json_keys:
+            assert key_name in response_json[0], f'There is no "{key_name}" json key in response'

@@ -16,9 +16,10 @@ class TestLookupRetailer(BaseCase):
         response = EERequests.get(f"/lookup/retailer", params={'clientHost': client_Host})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        assert response_as_dict['apiHostname'] == expected_api_HostName, f"Expected apiHostname: {expected_api_HostName}, but got: {response_as_dict['apiHostname']}"
-        assert response_as_dict['retailerCode'] == expected_retailer_Code, f"Expected retailerCode: {expected_retailer_Code}, but got: {response_as_dict['retailerCode']}"
+        # response_json = response.json()
+        response_json = BaseCase.get_json_body(response)
+        assert response_json['apiHostname'] == expected_api_HostName, f"Expected apiHostname: {expected_api_HostName}, but got: {response_json['apiHostname']}"
+        assert response_json['retailerCode'] == expected_retailer_Code, f"Expected retailerCode: {expected_retailer_Code}, but got: {response_json['retailerCode']}"
 
     @allure.title("Check retailer search with invalid client: {client_Host}")
     def test_lookup_retailer_invalid_clientHost(self):
@@ -26,6 +27,6 @@ class TestLookupRetailer(BaseCase):
         response = EERequests.get(f"/lookup/retailer/", params={'clientHost': invalid_clientHost})
         assert response.status_code == 200, f"Expected status code 200 for invalid clientHost, but got {response.status_code}"
 
-        response_as_dict = response.json()
-        assert response_as_dict['apiHostname'] is None, f"Expected apiHostname: None, but got: {response_as_dict['apiHostname']}"
-        assert response_as_dict['retailerCode'] is None, f"Expected retailerCode: None, but got: {response_as_dict['retailerCode']}"
+        response_json = BaseCase.get_json_body(response)
+        assert response_json['apiHostname'] is None, f"Expected apiHostname: None, but got: {response_json['apiHostname']}"
+        assert response_json['retailerCode'] is None, f"Expected retailerCode: None, but got: {response_json['retailerCode']}"

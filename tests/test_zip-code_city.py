@@ -17,14 +17,14 @@ class TestZipCodeCity(BaseCase):
         response = EERequests.get(f"/zip-code/city", params={'zipCode': ZIP_Code}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        assert 'city' in response.json(), "There is no city_parameter returned"
-        actual_city = response.json()['city']
-        # self.actual_city = self.get_json_value(response, "city")
+        response_json = BaseCase.get_json_body(response)
+
+        assert 'city' in response_json, "There is no city_parameter returned"
+        actual_city = response_json['city']
         assert actual_city.upper() == expected_city.upper(), 'Actual city_parameter is INcorrect'
 
-        assert 'state' in response.json(), "There is no state_parameter returned"
-        actual_state = response.json()['state']
-        # actual_state = self.get_json_value(response, "state")
+        assert 'state' in response_json, "There is no state_parameter returned"
+        actual_state = response_json['state']
         assert actual_state.upper() == expected_state.upper(), 'Actual state_parameter is INcorrect'
 
     @allure.title("Check negative ZIP code search - not found for ZIP: {ZIP_Code} (Retailer: {retailer})")

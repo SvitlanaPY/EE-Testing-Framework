@@ -46,7 +46,7 @@ class TestProductsOptionalItems(BaseCase):
         response = EERequests.get(f"/products/optional-items", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_json = response.json()
+        response_json = BaseCase.get_json_body(response)
         # for group in self.GROUPS:
         for group in response_json:
             # assert group in response_json, f'There is no "{group}" json key in response'
@@ -74,7 +74,7 @@ class TestProductsOptionalItems(BaseCase):
         response = EERequests.get(f"/products/optional-items", params={'zipCode': ZIP_Code, 'storeId': store_id, 'prodQteGrpID': prodQteGrp_ID}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_json = response.json()
+        response_json = BaseCase.get_json_body(response)
 
         for group in response_json:
             group_value = response_json[group]

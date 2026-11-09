@@ -18,11 +18,11 @@ class TestProductsMaterials(BaseCase):
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        assert len(response_as_dict) > 0, "None material is returned"
+        response_json = BaseCase.get_json_body(response)
+        assert len(response_json) > 0, "None material is returned"
 
         for key_name in self.json_keys:
-            assert key_name in response_as_dict[0], f'There is no "{key_name}" json key in response'
+            assert key_name in response_json[0], f'There is no "{key_name}" json key in response'
 
     @allure.title("Check colors availability in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
@@ -30,9 +30,9 @@ class TestProductsMaterials(BaseCase):
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        for i in range(len(response_as_dict)):
-            assert len(response_as_dict[i]['colors']) > 0, f"None color is returned"
+        response_json = BaseCase.get_json_body(response)
+        for i in range(len(response_json)):
+            assert len(response_json[i]['colors']) > 0, f"None color is returned"
 
     @allure.title("Check materials sorting by rank in products/materials/ (ZIP: {ZIP_Code}, Store: {store_id}, Retailer: {retailer})")
     @pytest.mark.parametrize('ZIP_Code, store_id, retailer', parametersList)
@@ -40,10 +40,10 @@ class TestProductsMaterials(BaseCase):
         response = EERequests.get(f"/products/materials", params={'zipCode': ZIP_Code, 'storeId': store_id}, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, 'Wrong status code'
 
-        response_as_dict = response.json()
-        for i in range(len(response_as_dict)):
-            if response_as_dict[i]['rank'] is None:
-                response_as_dict[i]['rank'] = 999999999999
+        response_json = BaseCase.get_json_body(response)
+        for i in range(len(response_json)):
+            if response_json[i]['rank'] is None:
+                response_json[i]['rank'] = 999999999999
 
-        for i in range(len(response_as_dict) - 1):
-            assert response_as_dict[i + 1]['rank'] >= response_as_dict[i]['rank'], "Materials are not sorted"
+        for i in range(len(response_json) - 1):
+            assert response_json[i + 1]['rank'] >= response_json[i]['rank'], "Materials are not sorted"

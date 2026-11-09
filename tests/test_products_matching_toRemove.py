@@ -50,7 +50,7 @@ class TestEPM(BaseCase):
         response = EERequests.post(f"/products/matching", json=current_payload, headers={"Authorization": self.tokens_list.get(retailer)})
         assert response.status_code == 200, f"Wrong status code - 200 is expected, but got {response.status_code}: {response.reason}"
 
-        response_json = response.json()
+        response_json = self.get_json_body(response)
         assert len(response_json["productsToRemove"]) != 0, f"Mapping error! Expected productID: {sent_product_id} to be removed, but no product returned to remove."
         assert "productId" in response_json["productsToRemove"][0], "Response JSON does not contain 'productId' field"
         # Getting newProductID returned by server
